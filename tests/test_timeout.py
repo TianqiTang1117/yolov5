@@ -1,9 +1,9 @@
 import platform
 import sys
-from pathlib import Path
 import types
-import numpy as np
+from pathlib import Path
 
+import numpy as np
 import pytest
 
 # Stub minimal cv2 module to satisfy utils.general import without requiring full OpenCV
@@ -47,4 +47,3 @@ def test_timeout_propagates_when_not_suppressed(monkeypatch):
     with pytest.raises(TimeoutError):
         with Timeout(1, suppress_timeout_errors=False):
             raise TimeoutError("boom")
-
