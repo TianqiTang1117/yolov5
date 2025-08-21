@@ -55,8 +55,7 @@ class Callbacks:
         return self._callbacks[hook] if hook else self._callbacks
 
     def run(self, hook, *args, thread=False, **kwargs):
-        """
-        Loop through the registered actions and fire all callbacks on main thread.
+        """Loop through the registered actions and fire callbacks on the main thread or in daemon threads if `thread=True`.
 
         Args:
             hook: The name of the hook to check, defaults to all

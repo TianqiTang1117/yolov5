@@ -178,7 +178,7 @@ def user_config_dir(dir="Ultralytics", env_var="YOLOV5_CONFIG_DIR"):
     else:
         cfg = {"Windows": "AppData/Roaming", "Linux": ".config", "Darwin": "Library/Application Support"}  # 3 OS dirs
         path = Path.home() / cfg.get(platform.system(), "")  # OS-specific config dir
-        path = (path if is_writeable(path) else Path("/tmp")) / dir  # GCP and AWS lambda fix, only /tmp is writeable
+        path = (path if is_writeable(path) else Path("/tmp")) / dir  # GCP and AWS lambda fix, only /tmp is writable
     path.mkdir(exist_ok=True)  # make if required
     return path
 
@@ -235,8 +235,8 @@ class Timeout(contextlib.ContextDecorator):
         """Disables active alarm on non-Windows systems and optionally suppresses TimeoutError if set."""
         if platform.system() != "Windows":
             signal.alarm(0)  # Cancel SIGALRM if it's scheduled
-            if self.suppress and exc_type is TimeoutError:  # Suppress TimeoutError
-                return True
+        if self.suppress and exc_type is TimeoutError:  # Suppress TimeoutError
+            return True
 
 
 class WorkingDirectory(contextlib.ContextDecorator):
